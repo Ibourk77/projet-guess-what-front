@@ -28,11 +28,7 @@ h2 {
     position: relative;
   }
   
-  #logo {
-    position: absolute;
-    left: 20px;
-    height: 80px; 
-  }
+  
   
   nav {
     display: flex;
@@ -655,3 +651,8 @@ h2 {
   margin-top: 5px;
 }
 
+#logo {
+    position: absolute;
+    left: 20px;
+    height: 80px; 
+  }
