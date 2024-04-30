@@ -12,19 +12,21 @@
     const themeId = event.target.value; // Récupération de l'ID du thème sélectionné.
 
     // Requête à l'API pour récupérer les scores maximums pour le thème sélectionné.
-    const result = await fetch(`https://guesswhat-api.onrender.com/user/theme/${themeId}/play`, {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${data.token}` // Inclusion du token d'authentification dans les en-têtes.
+    const result = await fetch(
+      `https://guess-what-back.onrender.com/user/theme/${themeId}/play`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${data.token}`, // Inclusion du token d'authentification dans les en-têtes.
+        },
       }
-    });
+    );
 
     // Traitement de la réponse de l'API et mise à jour des scores.
     const maxScores = await result.json();
     console.log(maxScores); // Affichage des scores maximums pour le débogage.
     scores = maxScores; // Mise à jour de l'état des scores avec les nouvelles données.
   }
-  
 </script>
 
 <main>
@@ -35,7 +37,7 @@
       <option>-- Choisissez un thème --</option>
       <!-- Boucle sur chaque thème disponible dans 'data.themes' -->
       {#each data.themes as theme, i}
-        <option value="{theme.id}">{theme.name}</option>
+        <option value={theme.id}>{theme.name}</option>
       {/each}
     </select>
   </section>
@@ -47,7 +49,8 @@
       <thead>
         <tr>
           <th>Rang</th>
-          <th>Pseudo</th> <!-- Colonne pour les pseudos -->
+          <th>Pseudo</th>
+          <!-- Colonne pour les pseudos -->
           <th>Score</th>
           <th>nbr indice</th>
           <th>nbr erreur</th>
@@ -56,15 +59,16 @@
       <tbody>
         <!-- Condition pour vérifier s'il y a des scores à afficher -->
         {#if scores[0]}
-        {#each scores as score, index}
-          <tr>
-            <td>{index + 1}</td>
-            <td>{score.player.username}</td> <!-- Affichage du pseudo du joueur -->
-            <td>{score.maxScore}</td>
-            <td>{score.count_indicators}</td>
-            <td>{score.errors}</td>
-          </tr>
-        {/each}
+          {#each scores as score, index}
+            <tr>
+              <td>{index + 1}</td>
+              <td>{score.player.username}</td>
+              <!-- Affichage du pseudo du joueur -->
+              <td>{score.maxScore}</td>
+              <td>{score.count_indicators}</td>
+              <td>{score.errors}</td>
+            </tr>
+          {/each}
         {:else if isSelected && !scores[0]}
           <!-- Message affiché s'il n'y a pas de scores pour le thème sélectionné -->
           <p>Aucun score enregistré pour ce thème</p>
